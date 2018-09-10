@@ -1,0 +1,23 @@
+
+eslint配置了解：
+可以在.eslintrc.js做适当配置
+ 'semi':['error','always'] 分号配置 表示必须加分号
+ 'indent':0, 缩进配置，想利用编辑器自带格式化插件格式化，可以配置eslint indent 设置为0
+ /* eslint-disable no-new */这个表示使用new 关键词是一般要赋值一个变量 使用上面这个行代码 跳过验证
+
+
+设计稿尺寸一般都是按照IPHOE6设计的  上面标注的尺寸 我们实际的尺寸是标注的一半
+
+webpack.base.conf.js 这个文件基础配置
+我们导入文件很多都是以相对路径导入 如’import Goods from '../components/Goods/Goods';
+在webpack.base.conf.js 中 '@': resolve('src'),用@表示 如写这样：import Goods from '@/components/Goods/Goods';
+resolve: {
+     extensions: ['.js', '.vue', '.json'],
+      alias: {
+              'vue$': 'vue/dist/vue.esm.js',
+                '@': resolve('src'),
+              }
+
+
+开发移动端 手机预览技巧
+先 查看本机ip地址  命令cmd ipconfig 找到ip地址 替换浏览器的localhost  然后复制替换浏览器地址在草料二维码生成二维码手机扫就可以 手机要电脑连同一个局域网
