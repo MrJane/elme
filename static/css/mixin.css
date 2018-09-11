@@ -1,0 +1,36 @@
+/*//border-1px($color) 可以使用less函数 要去自学 暂时先写样式代替 然后把这个类添加到需要边框的元素上*/
+.borderonepx{
+  position: relative;
+  /*&:after{*/
+    /*display: block;*/
+    /*position: absolute;  用less没效果  待验证*/
+    /*left: 0;*/
+    /*bottom: 0;*/
+    /*border-bottom: 1px solid rgba(7,17,27,.1);*/
+    /*content: '';*/
+
+  /*}*/
+}
+.borderonepx:after{
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  /*宽度必须定义 ，不然没显示*/
+  border-top: 1px solid rgba(7,17,27,.1);
+  /*这样其实也没解决1px像素问题，我们要利用媒体查询根据设备DPI缩放如下：*/
+  content: '';
+}
+@media (-webkit-min-device-pixel-ratio: 1.5),(-webkit-device-pixel-ratio: 1.5){
+  .borderonepx:after{
+    -webkit-transform: scaleY(0.7);
+    transform: scaleY(0.7);
+  }
+}
+@media (-webkit-min-device-pixel-ratio: 2),(-webkit-device-pixel-ratio: 2){
+  .borderonepx:after{
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+}

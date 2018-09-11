@@ -21,3 +21,13 @@ resolve: {
 
 开发移动端 手机预览技巧
 先 查看本机ip地址  命令cmd ipconfig 找到ip地址 替换浏览器的localhost  然后复制替换浏览器地址在草料二维码生成二维码手机扫就可以 手机要电脑连同一个局域网
+手机1px像素处理技巧：
+/*border-bottom: 1px solid rgba(7,17,27,.1); 如果在手机端浏览就不是真实1px 手机端有个dbI概念，物理像素是设备像素两倍在iPhone6下面
+ * 在iPhone6预览感觉是2px
+ */
+
+ 样式文件过多导入技巧：
+ 可以在css中建一个index.less 然后导入其他less文件
+ @import "./mixin.css";
+ @import "./reset.css";
+然后在main.js导入index.less文件即可
