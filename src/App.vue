@@ -31,7 +31,8 @@
     },
     created () {
       this.$ajax.get('/elme/seller').then((res) => {
-        this.seller = res.data.result;
+        // 报错原因：this.seller = res.data.result 应该要seller赋值给它，
+        this.seller = res.data.result.seller;
       });
     }
   };
