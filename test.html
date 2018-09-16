@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .wrapper{
+      display: inline-block;
+      margin-left: -2px;
+      width: 40px;
+      height: 20px;
+      background-color: red;
+      position: relative;
+    }
+    .wrapper:before{
+      content: "";
+      position: absolute;
+      right: -6px;
+      top: 5px;
+      border-top: 6px solid transparent;
+      border-left: 6px solid red;
+      border-bottom: 6px solid transparent;
+      z-index: 1;
+    }
+    .wrapper:after{
+      content: "";
+      position: absolute;
+      right: 34px;
+      top: 5px;
+      border-top: 6px solid transparent;
+      border-left: 6px solid #fff;
+      border-bottom: 6px solid transparent;
+
+    }
+    .wrapper.active{
+      background-color: green;
+      margin-right: -3px;
+      border-right: 2px solid green;
+    }
+    .wrapper.active:before{
+      right: -8px;
+      border-left: 6px solid green;
+    }
+  </style>
+
+</head>
+<body>
+<div class="wrapper"></div>
+<div class="wrapper"></div>
+<div class="wrapper active">
+
+</div>
+<div class="wrapper"></div>
+</body>
+</html>

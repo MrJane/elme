@@ -32,11 +32,48 @@
     <div class="background">
       <img :src="seller.avatar" alt="" width="100%" height="100%">
     </div>
-    <div v-show="detailShow" class="detail"></div>
+    <transition name="fade">
+      <div v-show="detailShow" class="detail">
+        <!--transition 需要学习-->
+        <div class="detail-wrapper ">
+          <div class="detail-main">
+            <h1 class="name">{{seller.name}}</h1>
+            <!--星星组件是居中的，居中的样式不要在组件内写死，所以给包一层div居中-->
+            <div class="star-wrapper">
+              <v-star :size="48" :score="seller.score"></v-star>
+            </div>
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">优惠信息</div>
+              <div class="line"></div>
+            </div>
+            <ul v-if="seller.supports" class="supports">
+              <li class="support-item" v-for="(item,index) in seller.supports" :key="index">
+                <span class="icon" :class="classMap[item.type]"></span>
+                <span class="text">{{item.description}}</span>
+              </li>
+            </ul>
+            <div class="title">
+              <div class="line"></div>
+              <div class="text">商家公告</div>
+              <div class="line"></div>
+            </div>
+            <div class="bulletin">
+              <p>{{seller.bulletin}}</p>
+            </div>
+          </div>
+        </div>
+        <div @click="hideDetail" class="detail-close">
+          <i class="icon-close"></i>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
+  import Star from '../Star/Star';
+
   export default {
     name: 'Header',
     // 这传过来的是个对象，应该设置props seller为对象属性 props不能是数组
@@ -49,6 +86,9 @@
     methods: {
       showDetail () {
         this.detailShow = true;
+      },
+      hideDetail () {
+        this.detailShow = false;
       }
     },
     mounted () {
@@ -56,6 +96,9 @@
     created () {
       // 建立类名数组，当然还有其他方法使用
       this.classMap = ['decrease', 'discount', 'guarantee', 'invoice', 'special'];
+    },
+    components: {
+      'v-star': Star
     }
   };
 </script>
@@ -197,7 +240,114 @@
       height: 100%;
       top: 0;
       left: 0;
+      overflow: auto;
+      transition: all 0.5s;
+      opacity: 1;
+      z-index: 1000;
       background: rgba(7, 17, 27, .8);
+      &.fade-enter-active, &.fade-leave-active {
+        transition: all 0.5s
+      }
+      &.fade-enter, &.fade-leave-to {
+        opacity: 0;
+        background: rgba(7, 17, 27, 0);
+      }
+      .detail-wrapper {
+        min-height: 100%;
+        width: 100%;
+        overflow: hidden;
+        .detail-main {
+          margin-top: 64px;
+          padding-bottom: 64px;
+          box-sizing: border-box;
+          .star-wrapper {
+            text-align: center;
+            margin-top: 18px;
+            padding: 2px 0;
+          }
+          .name {
+            line-height: 16px;
+            font-size: 16px;
+            text-align: center;
+            //文字中心对齐并没有中心对齐是因为detail-wrapper 元素加了clearfix类设置inline-block,所以要给detail-wrapper
+            //设置宽度100%
+            font-weight: bold;
+          }
+          .title {
+            display: flex;
+            width: 80%;
+            margin: 30px auto;
+            .line {
+              flex: 1;
+              position: relative;
+              top: -6px;
+              border-bottom: 1px solid rgba(255, 255, 255, .2);
+            }
+            .text {
+              padding: 0 12px;
+              font-size: 14px;
+            }
+          }
+          .supports {
+            width: 80%;
+            margin: 0px auto;
+            .support-item {
+              padding: 0 12px;
+              margin-bottom: 12px;
+              font-size: 0;
+              &:last-child {
+                margin-bottom: 0px;
+              }
+              .icon {
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                vertical-align: top;
+                margin-right: 6px;
+                background-size: 16px 16px !important;
+                background-repeat: no-repeat;
+                &.decrease {
+                  background: url("../../../static/img/decrease_1@2x.png");
+
+                }
+                &.discount {
+                  background: url("../../../static/img/discount_1@2x.png");
+                }
+                &.guarantee {
+                  background: url("../../../static/img/guarantee_1@2x.png");
+                }
+                &.invoice {
+                  background: url("../../../static/img/invoice_1@2x.png");
+                }
+                &.special {
+                  background: url("../../../static/img/special_1@2x.png");
+                }
+              }
+              .text {
+                font-size: 12px;
+                line-height: 16px;
+              }
+            }
+          }
+          .bulletin {
+            width: 80%;
+            margin: 0 auto;
+            p {
+              padding: 0 12px;
+              line-height: 24px;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+      .detail-close {
+        position: relative;
+        width: 32px;
+        height: 32px;
+        font-size: 32px;
+        clear: both;
+        margin: -64px auto 0 auto; //这个点需要注意因为父元素是整屏高度所以要设置-margin
+      }
     }
   }
 </style>
